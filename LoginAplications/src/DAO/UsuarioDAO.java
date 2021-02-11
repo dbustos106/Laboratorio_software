@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class UsuarioDAO {
 
@@ -71,6 +72,35 @@ public class UsuarioDAO {
             }
         }
 
+    }
+    
+    public ArrayList<Usuario> usuarios() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Usuario");
+            ArrayList<Usuario> usuarios = new ArrayList<>();
+            while(resultSet.next()){
+                Usuario usuario = new Usuario(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3));
+                usuarios.add(usuario);
+            }
+            return usuarios;
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException ex) {
+
+            }
+        }
+        return null;
     }
 
     public boolean actualizar(Usuario oldUser, Usuario newUser) {

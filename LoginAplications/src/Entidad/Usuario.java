@@ -6,6 +6,20 @@ public class Usuario {
     private String nombre;
     private String password;
 
+    public Usuario(int id, String nombre, String password) {
+        this.id = id;
+        this.nombre = nombre;
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", password=" + password + '}';
+    }
+   
+    public Usuario() {
+    }
+    
     public int getId() {
         return id;
     }
